@@ -1,0 +1,30 @@
+{% extends "faceApp/base.html" %}
+{% block contenido %}
+    <h1>face {{valor}}</h1>
+    <h2>Don´t use hardcoded urls</h2>
+    <ul>
+        <li>
+            <a href="/detalle/1">enlace 1</a>
+        </li>
+        <li>
+            <a href="/faceApp/detalle/1">enlace 2</a>
+        </li>
+        <li>
+            <a href="detalle/1">enlace 3</a>
+        </li>
+        <li>
+            <a href="{% url 'faceApp:detalle' 1 %}">enlace 4</a>
+        </li>
+        <li>
+            <a href="{% url 'faceApp:detalle' 2 %}">enlace 5</a>
+        </li>
+        <li>
+            <a href="{% url 'faceApp:upload' %}">upload</a>
+        </li>
+    </ul>
+
+    <form action="{%url 'faceApp:detalle' 567 %}" method="post">
+        {% csrf_token %}
+        <input type="submit">
+    </form>
+{% endblock %}

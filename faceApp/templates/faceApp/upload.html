@@ -1,0 +1,10 @@
+{% extends "faceApp/base.html" %}
+
+
+{% block contenido %}
+    <form method="post" enctype="multipart/form-data" name="upload_data" action="faceApp{% url 'faceApp:manage_upload' %}">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="subir">
+    </form>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "faceApp/base.html" %}
+
+{% block estilo_script %}
+<link rel="stylesheet" href="https://unpkg.com/jcrop/dist/jcrop.css">
+<script src="https://unpkg.com/jcrop"></script>
+{% endblock %}
+
+{% block post_scripts %}
+<script>
+    const jcrop=Jcrop.attach('target',{
+        multi: true
+    });
+
+    //agregar unos crops iniciales
+    let rect = Jcrop.Rect.create(100,100,50,50);
+    jcrop.newWidget(rect, {});
+    rect= Jcrop.Rect.create(200,200,50,50);
+    jcrop.newWidget(rect, {});
+
+    
+
+</script>
+{% endblock %}
+
+{% block contenido %}
+    <h1>Titulo de la imagen: {{ data.title }}</h1>
+    <h3>id de la imagen: {{ data.id }}</h3>
+    <h3>ruta de la imagen: {{ data.image.url }}</h3>
+    <img src="{{ data.image.path }}" style="max-height: 300px;" id="target"/>
+{% endblock %}
