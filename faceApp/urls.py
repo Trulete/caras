@@ -1,5 +1,7 @@
 from django.urls  import path
+from django.conf.urls import include
 from django.conf.urls.static import static
+from django.conf import settings
 
 from . import views
 
@@ -15,5 +17,15 @@ urlpatterns=[
     path("detalle/<int:iddetalle>", views.detalle, name="detalle2"),
     path("ajax/", views.ajax, name="ajax"),
     path("usaajax/", views.usaajax, name="usaajax"),
+    path("gallery_images/", views.usaajax, name="usaajax"),
+    path("detect_faces/", views.detect_faces, name="detectfaces"),
+
     
 ]
+if settings.DEBUG: 
+    urlpatterns += static(
+        settings.MEDIA_URL, 
+        document_root = settings.MEDIA_ROOT
+    )
+
+

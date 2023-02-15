@@ -34,7 +34,7 @@ def show_image(request, id):
     object=GalleryImage.objects.get(id = id)
     return render(request, "faceApp/show_image.html", { "data": object })
 
-#ajax: detergente, futbol, cantante, web
+
 def ajax(request, id):
     list=[]
     list.append({"x":1, "y":3})
@@ -49,10 +49,10 @@ def usaajax(request):
     #filtro resultado: json{array de coordenadas de los menores de edad}
 
 def detect_faces(request, photo):
-    aws_access_key_id="ASIAYYLDTHNX4C3K3MSN"
-    aws_secret_access_key="WhNBif6YrDzawX4CM/l3srmp4rbwIY9nNOqkJzaM"
-    aws_session_token="FwoGZXIvYXdzECIaDOOP+kOCZj730f9+0SK8AVaPYeaLjAnL18dDfU4Bhk8vmU/VlKk08F8HESoJ7V/1Dh4X6Qdg0EzDrDI1k07zU+0KNXqymonY5aFGpLx2DOheudhtbaLMM/k7kmFOaY7JBDyoAEDMww4Hq6Ul28Sm8HBs0WZLDCPHScrRGMCuWrnU54SfAybGvxWpKqH7CqD4JjAe2ZFzAzzMsxv0m7TppHSDjwqU//kBBJg3xRQbeggvEM5YkJTTQJnZyaQotzdWOqZl2kgBbI3691ZLKKfYpZ4GMi1Eb6Y5DiHNYObq9TNoqTB+p0DGeERpwIrKjNOW0qL0dyIhrUISVYxSq5giucM="
-    bucket="iabd-ickkck-aws-bucket"
+    aws_access_key_id="ASIAT47P6J6FJUKLP4OU"
+    aws_secret_access_key="YRUn+F/eEzgsIPhLw5omV+q7cu7f9t+sN5l8CHwa"
+    aws_session_token="FwoGZXIvYXdzEGQaDHFb7BPE+MDf00e7YiLAAVkaoEKK4i99TRqr/P1PVM8yCkKl/JIBLVUQ70fO08yxD0+2+NPJlxdv7xY3Yn6S6cpCeMqIwKX57feSEgGru/uWUDicfDLhVHbXYdX9zgZuquroDVJmzdGOVfDnqpMHZyysv0z1s6kBSXUs11/PAJYD/jP89jEnwA70lNwPJFKazDc3Xfbwfms44g4aC/JnHkkIDlsTLRJFKG+Yf0SyrILYyTkun7qny57Y61Zdoa6rglAkw8v5e+3DNYDMFx/6PSiw6aSfBjItoCzcf+JWL/TaoiOMgYswBqdWnhirsoSdHeXtDRp8YtqNdO4Ts+YUpOpAs4x5"
+    bucket="trulete-iabd-bucket"
     region="us-east-1"
     
 
@@ -60,7 +60,7 @@ def detect_faces(request, photo):
     data = open(photo, 'rb')
     s3.Bucket(bucket).put_object(Key=photo, Body=data)
 
-    def caritas(bucket, key, attributes=['ALL'], region="us-east-1"):
+    def recocaras(bucket, key, attributes=['ALL'], region="us-east-1"):
         rekognition = boto3.client("rekognition", region, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
         response = rekognition.detect_faces(
             Image={
@@ -73,7 +73,7 @@ def detect_faces(request, photo):
         )
         return response
  
-    output=caritas(bucket, photo)
+    output=recocaras(bucket, photo)
     print(output)
 
     d = open("salida.json", "w")

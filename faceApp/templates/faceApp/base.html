@@ -8,9 +8,12 @@
     <title>DUA: Django Upload App</title>
     <link rel="stylesheet" href="{% static 'faceApp/assets/css/estilo.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'faceApp/assets/img/favicon.png' %}">
+    <link rel="stylesheet" href="https://unpkg.com/jcrop/dist/jcrop.css">
+<script src="https://unpkg.com/jcrop"></script>
     {% block estilo_script %}{% endblock %}
 </head>
 <body>
+    <h1> Cargador de imágenes</h1>
     <img src="{% static 'faceApp/assets/img/imagen.jpg' %}" alt="caras" width="300">
     {% block contenido %}{% endblock %}
     <script src=""{}></script>
