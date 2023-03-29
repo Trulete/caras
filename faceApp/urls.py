@@ -2,7 +2,6 @@ from django.urls  import path
 from django.conf.urls import include
 from django.conf.urls.static import static
 from django.conf import settings
-
 from . import views
 
 app_name= "faceApp"
@@ -14,12 +13,8 @@ urlpatterns=[
     path("manage_upload/", views.manage_upload, name="manage_upload"),
     path("show_image/<int:id>", views.show_image, name="show_image"),
     path("<int:iddetalle>/detalle", views.detalle, name="detalle"),
-    path("detalle/<int:iddetalle>", views.detalle, name="detalle2"),
-    path("ajax/", views.ajax, name="ajax"),
-    path("usaajax/", views.usaajax, name="usaajax"),
-    path("gallery_images/", views.usaajax, name="usaajax"),
-    path("detect_faces/", views.detect_faces, name="detectfaces"),
-
+    path("blur_image", views.blur_image, name="blur_image"),
+    path("show_blur_image/<str:id>", views.show_blur_image, name="show_blur_image"),
     
 ]
 if settings.DEBUG: 

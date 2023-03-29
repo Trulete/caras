@@ -6,60 +6,66 @@
     <h1>Titulo de la imagen: {{ data.title }}</h1>
     <h3>id de la imagen: {{ data.id }}</h3>
     <h3>ruta de la imagen: {{ data.image.url }}</h3>
-    <img src="..{{ data.image.url }}" id="targetimg"/>
+    <img src="faceApp{{ data.image.url }}" id="targetimg"/>
+
+    <form id="formu" action="{% url 'faceApp:blur_image' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="coordenadas" id="coordenadas">
+        <input type="hidden" name="imagen" value="{{data.id}}">
+        <input type="submit" value="Hacer blur">
+    </form>
+
+    
+
 
     <script>
-    
+
+        fetch('/static/faceApp/assets/menores.json')
+            .then(response => response.json())
+            .then(data => {
+                // Guardar el contenido recuperado en una variable
+                console.log(data);
+                pintaLosRectagulos(data);
+        })
+            
+        
         const jcrop = Jcrop.attach('targetimg',{
                         multi: true
                       });
-        const rect = Jcrop.Rect.create(
-                                              100,100,50,50);
-                          jcrop.newWidget(rect,{}
-                        );
         
-        jcrop.listen('crop.change',function(widget,e){
-            const pos = widget.pos;
-            console.log(pos.x,pos.y,pos.w,pos.h);
-            });
-    
-        fetch('/detect_faces/', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-            id: '{{ file.id }}'
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-            console.log('data',data);
-            for (let crop of data){
-                console.log('crop_for',crop);
-                const rect = Jcrop.Rect.create(crop.left,crop.top,crop.width,crop.height);
-                jcrop.newWidget(rect,{});;
+        function pintaLosRectagulos(data){
+            for (let i = 0; i < data.length; i++) {
+                var coord = data[i];
+                var left = coord.left;
+                var top = coord.top;
+                var width = coord.width;
+                var height = coord.height;
+                var rectangulo =Jcrop.Rect.create(left, top, width, height);
+                jcrop.newWidget(rectangulo, {});
+                console.log('esto es un ',rectangulo);
             }
-            console.log('crop',jcrop);
-
-        })
-
-        function onFormSubmit(event) {
-            let crops = [];
-            for (let crop of jcrop.crops){
-            crops.push([crop.pos.x,crop.pos.y,crop.pos.w,crop.pos.h])
-            }
-        console.log('onFormSubmit',crops);
-        list.value = JSON.stringify(crops);
-        // list{{ file.id }}.value = crops{{ file.id }};
-        console.log('send to blur',list.value);
-        // Envía el formulario
-        form.submit();
-        // Cancela el envío predeterminado del formulario para evitar recargar la página
-        event.preventDefault();
         }
-
-
+        
+        function getCoordinates() {
+            let crops = jcrop.crops;
+            let coords = [];
+            for (const crop of crops) {
+                coords.push([crop.pos.x, crop.pos.y, crop.pos.w, crop.pos.h]);
+            }
+            return JSON.stringify(coords);
+        }
+        
+        let formulario = document.getElementById('formu');
+        let coordenadas = document.getElementById('coordenadas');
+            formulario.addEventListener('submit', function() {
+                coordenadas.value = getCoordinates();
+        });
+    
     
     </script>
+
+    
+
+
+    
 {% endblock %}
